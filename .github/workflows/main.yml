@@ -1,22 +1,28 @@
-name: Uploading an Artifact
+name: Passing Artifacts Between Jobs
 
-on: push
+on:
+  push:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - run: echo "output" > result.txt
 
-      - name: Create files
-        run: |
-          mkdir -p dist
-          echo "Hello" > dist/app.txt
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: app-build
-          path: dist/
+          name: result
+          path: result.txt
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: result
+
+      - run: cat result.txt
   
