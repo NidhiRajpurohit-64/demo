@@ -1,7 +1,8 @@
-name: Caching Dependencies
+name: Conditional Steps
 
 on:
   push:
+  pull_request:
 
 jobs:
   test:
@@ -10,14 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
+      - name: Only on main
+        if: github.ref == 'refs/heads/main'
+        run: echo "This runs only on main"
 
-      - run: npm ci
-
-      - run: npm test
-
-      - run: cat result.txt
+      - name: Only on pull requests
+        if: github.event_name == 'pull_request'
+        run: echo "This runs only on PRs"
   
