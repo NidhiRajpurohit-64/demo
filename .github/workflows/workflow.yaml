@@ -1,16 +1,15 @@
 name: CI
 
 on: push
-
+env:
+ APP_NAME: my-app
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
+    env:
+      - MODE_ENV: production
     steps:
-      - uses: actions/checkout@v4
-      - run: echo "Lint step running"
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: echo "Test step running"
+      - name: Show them
+        env:
+         GREETING: hello
+        run: echo "$APP_NAME $MODE_ENV $GREETING"
