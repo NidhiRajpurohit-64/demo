@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      - MODE_ENV: production
+      MODE_ENV: production
     steps:
       - name: Show them
         env:
