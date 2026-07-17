@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
-    steps:
-      - uses: actions/checkout@v4
-      - run: echo "Deploying, because this is main"
+   env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: echo "Deploying to production"
       
 
 
