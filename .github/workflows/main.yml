@@ -1,9 +1,16 @@
-name: First CI
+name: Pipeline
 on: push
 jobs:
-  greet:
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["18", "20"]
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Hello from GitHub Actions!"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: echo "Testing on Node ${{ matrix.node }}"
+
 
