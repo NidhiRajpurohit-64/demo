@@ -1,15 +1,14 @@
-name: Pipeline
-on: push
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["18", "20"]
+
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-      - run: echo "Testing on Node ${{ matrix.node }}"
-
+      - run: echo "Deployed"
