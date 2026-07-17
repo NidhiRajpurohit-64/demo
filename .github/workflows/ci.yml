@@ -1,6 +1,8 @@
 name: CI
 
-on: push
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
@@ -8,10 +10,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - run: echo "Running tests"
 
-      - name: Show the commit
-        run: echo "Commit: $GITHUB_SHA"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: production
 
-      - name: List the files
-        run: ls -la
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Deploy
+        env:
+          TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: echo "Deploying to production"
