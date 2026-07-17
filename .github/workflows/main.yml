@@ -1,11 +1,13 @@
-name: Pipeline
+name: CI
 
-on: push
-
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - run: echo "Running tests"
@@ -14,9 +16,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Deploying because this is main"
+      - run: echo "Deploying, because this is main"
       
 
 
